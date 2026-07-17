@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สินค้า | CHANTHABURI FIREWORKS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section style="padding-bottom:32px;">
+  <div class="container">
+    <span class="eyebrow">Product Catalog</span>
+    <h1 class="section-title" style="margin-bottom:10px;">สินค้า</h1>
+    <!-- <p class="section-sub">คลังอุปกรณ์แบบ Data-Dense — ค้นหาสิ่งที่คุณต้องการได้อย่างรวดเร็ว ทุกการ์ดแสดง SKU แรงดันไฟฟ้า และระยะส่งสัญญาณก่อนเลื่อนเมาส์</p> -->
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="container shop-layout">
+    <aside>
+      <div class="filter-group">
+        <div class="filter-title">หมวดหมู่</div>
+        <div id="catFilters"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-title">ช่องจุด</div>
+        <div id="chFilters"></div>
+      </div>
+      <!-- <div class="filter-group">
+        <div class="filter-title">สัญญาณ</div>
+        <div id="sigFilters"></div>
+      </div> -->
+    </aside>
+    <div>
+      <div class="result-count" id="resultCount"></div>
+      <div class="grid grid-3" id="productGrid"></div>
+    </div>
+  </div>
+</section>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const state = { cat: "all", ch: "all", sig: "all" };
+  const CH_OPTS = [24, 36 ,];
+
+  function filterBtns(container, opts, key) {
+    container.innerHTML = opts.map(o =>
+      `<button class="filter-opt ${state[key]===o.id ? 'active':''}" data-key="${key}" data-val="${o.id}">${o.th}</button>`
+    ).join("");
+  }
+
+  function draw() {
+    filterBtns(document.getElementById("catFilters"),
+      [{id:"all", th:"ทั้งหมด"}, ...CATEGORIES.map(c=>({id:c.id, th:c.th}))], "cat");
+    filterBtns(document.getElementById("chFilters"),
+      [{id:"all", th:"ทั้งหมด"}, ...CH_OPTS.map(c=>({id:c, th:c+" CH"}))], "ch");
+    // filterBtns(document.getElementById("sigFilters"),
+    //   [{id:"all", th:"ทั้งหมด"}, {id:"ไร้สาย", th:"ไร้สาย"}, {id:"มีสาย", th:"มีสาย"}], "sig");
+
+    document.querySelectorAll(".filter-opt").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.key;
+        let val = btn.dataset.val;
+        if (key === "ch" && val !== "all") val = Number(val);
+        state[key] = val;
+        draw();
+      });
+    });
+
+    const filtered = PRODUCTS.filter(p =>
+      (state.cat === "all" || p.category === state.cat) &&
+      (state.ch === "all" || p.channels === state.ch) &&
+      (state.sig === "all" || p.signal === state.sig)
+    );
+
+    document.getElementById("resultCount").textContent = filtered.length + " รายการ";
+    document.getElementById("productGrid").innerHTML = filtered.length
+      ? filtered.map(productCardHTML).join("")
+      : `<div class="empty-state">ไม่พบสินค้าตามเงื่อนไขที่เลือก</div>`;
+  }
+  draw();
+</script>
+</body>
+</html>

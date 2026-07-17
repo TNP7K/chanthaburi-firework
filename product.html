@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">สินค้า | CHANTHABURI FIREWORKS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section>
+  <div class="container">
+    <a href="products.html" class="back-link">← กลับไปหน้าสินค้า</a>
+    <div id="detailRoot" class="detail-grid"></div>
+  </div>
+</section>
+
+<section style="padding-top:0;" id="relatedSection">
+  <div class="container">
+    <div class="section-head"><h2 class="section-title">สินค้าที่เกี่ยวข้อง</h2></div>
+    <div class="grid grid-4" id="relatedGrid"></div>
+  </div>
+</section>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const id = getParam("id");
+  const p = PRODUCTS.find(x => x.id === id);
+  const root = document.getElementById("detailRoot");
+
+  if (!p) {
+    root.innerHTML = `<div class="empty-state">ไม่พบสินค้านี้ — <a href="products.html" style="color:var(--accent-2)">กลับไปหน้าสินค้า</a></div>`;
+    document.getElementById("relatedSection").style.display = "none";
+  } else {
+    document.getElementById("pageTitle").textContent = p.name + " | CHANTHABURI FIREWORKS";
+    const st = stockInfo(p.stock);
+
+    root.innerHTML = `
+      <div>
+        <div class="gallery-main"><img id="mainImg" src="${p.images[0]}" alt="${p.name}"></div>
+        <div class="gallery-thumbs">
+          ${p.images.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}" data-i="${i}" alt="${p.name} ${i+1}">`).join("")}
+        </div>
+      </div>
+      <div>
+        <div class="detail-sku">${p.id} · ${CATEGORIES.find(c=>c.id===p.category)?.th || ""}</div>
+        <span class="stock-tag ${st.cls}" style="margin-bottom:14px;"><span class="dot"></span>${st.label}</span>
+        <h1 class="detail-title">${p.name}</h1>
+        <div class="detail-price">${formatPrice(p.price)}</div>
+        <p class="detail-desc">${p.description}</p>
+        <div class="quick-stats">
+          <div><div class="num">${p.latency}</div><div class="lbl">ตอบสนอง</div></div>
+          <div><div class="num">${p.range}</div><div class="lbl">ระยะสัญญาณ</div></div>
+          <div><div class="num">${p.warranty}</div><div class="lbl">รับประกัน</div></div>
+        </div>
+        <a href="contact.html" class="btn btn-primary btn-block" ${p.stock==='out' ? 'style="pointer-events:none;opacity:.4;"' : ''}>
+          ${p.stock==='out' ? 'สินค้าหมดชั่วคราว' : 'สอบถาม / สั่งซื้อสินค้านี้ →'}
+        </a>
+        <table class="spec-table">
+          ${p.specs.map(s => `<tr><td>${s.k}</td><td>${s.v}</td></tr>`).join("")}
+        </table>
+      </div>`;
+
+    document.querySelectorAll(".gallery-thumbs img").forEach(t => {
+      t.addEventListener("click", () => {
+        document.getElementById("mainImg").src = p.images[t.dataset.i];
+        document.querySelectorAll(".gallery-thumbs img").forEach(x=>x.classList.remove("active"));
+        t.classList.add("active");
+      });
+    });
+
+    const related = PRODUCTS.filter(x => x.category === p.category && x.id !== p.id).slice(0,4);
+    document.getElementById("relatedGrid").innerHTML = related.length
+      ? related.map(productCardHTML).join("")
+      : `<div class="empty-state">ไม่มีสินค้าที่เกี่ยวข้อง</div>`;
+  }
+</script>
+</body>
+</html>

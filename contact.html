@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ติดต่อเรา | CHANTHABURI FIREWORKS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section style="padding-bottom:0;">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1 class="section-title" style="margin-bottom:10px;">ติดต่อเรา</h1>
+    <p class="section-sub">ทีมงานพร้อมตอบทุกข้อสงสัย ให้คำปรึกษา และช่วยเลือกอุปกรณ์ที่เหมาะกับงานของคุณ</p>
+  </div>
+</section>
+
+<section>
+  <div class="container contact-grid">
+    <div>
+      <div class="grid grid-2" style="margin-bottom:20px;">
+        <div class="info-card"><span class="ic">📞</span><div><div class="lbl">โทร</div><div class="val">081-308-9254</div></div></div>
+        <div class="info-card"><span class="ic">💬</span><div><div class="lbl">LINE OA</div><div class="val">@</div></div></div>
+        <div class="info-card"><span class="ic">📘</span><div><div class="lbl">FACEBOOK</div><div class="val">รับจุดพลุ และดอกไม้ไฟ</div></div></div>
+        <div class="info-card"><span class="ic">✉️</span><div><div class="lbl">EMAIL</div><div class="val">@</div></div></div>
+      </div>
+      <div class="info-card" style="margin-bottom:14px;"><span class="ic">🕐</span><div><div class="lbl">เวลาทำการ</div><div class="val">จันทร์ - อาทิตย์ · 24 ชม.</div></div></div>
+      <div class="info-card"><span class="ic">📍</span><div><div class="lbl">ที่ตั้ง</div><div class="val">-</div></div></div>
+    </div>
+
+    <div>
+      <form id="contactForm" onsubmit="return handleSubmit(event)">
+        <div class="form-field"><label>ชื่อ *</label><input type="text" required></div>
+        <div class="form-row">
+          <div class="form-field"><label>อีเมล</label><input type="email"></div>
+          <div class="form-field"><label>เบอร์โทร</label><input type="tel"></div>
+        </div>
+        <div class="form-field"><label>หัวข้อ</label><input type="text"></div>
+        <div class="form-field"><label>ข้อความ *</label><textarea rows="6" required></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">ส่งข้อความ →</button>
+        <p id="formNote" style="font-size:12.5px; color:var(--text-faint); margin-top:12px;"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  // ตอนนี้เป็นฟอร์มตัวอย่าง (แสดงข้อความยืนยันเฉยๆ)
+  // เชื่อมต่อจริงได้ด้วยบริการอย่าง Formspree / Getform / EmailJS (ดูใน README)
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById("formNote").textContent = "ขอบคุณสำหรับข้อความ ทีมงานจะติดต่อกลับโดยเร็วที่สุด (ฟอร์มตัวอย่าง — ยังไม่เชื่อมต่อระบบส่งจริง ดู README)";
+    e.target.reset();
+    return false;
+  }
+</script>
+</body>
+</html>

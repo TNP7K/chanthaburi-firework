@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ผลงาน | CHANTHABURI FIREWORKS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section style="padding-bottom:0;">
+  <div class="container">
+    <span class="eyebrow">Gallery of Impact</span>
+    <h1 class="section-title" style="margin-bottom:10px;">ผลงาน</h1>
+    <p class="section-sub">รวมภาพการแสดงดอกไม้ไฟและ Special Effects ในเทศกาล คอนเสิร์ต งานอีเวนต์ งานพิธีการ และงานเฉลิมฉลองหลากหลายรูปแบบ ที่ดำเนินการด้วยระบบควบคุมของเรา</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="tab-row" id="tabRow"></div>
+    <div id="portfolioList"></div>
+  </div>
+</section>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const TABS = [
+    { id: "all", th: "ทั้งหมด" },
+    // { id: "concert", th: "งานคอนเสิร์ต" },
+    // { id: "wedding", th: "งานแต่ง" },
+    // { id: "festival", th: "งานเทศกาล" },
+    // { id: "corporate", th: "งานองค์กร" },
+  ];
+  let active = "all";
+
+  function draw() {
+    document.getElementById("tabRow").innerHTML = TABS.map(t =>
+      `<div class="tab ${t.id===active?'active':''}" data-id="${t.id}">${t.th}</div>`
+    ).join("");
+    document.querySelectorAll(".tab").forEach(t => {
+      t.addEventListener("click", () => { active = t.dataset.id; draw(); });
+    });
+
+    const items = PORTFOLIO.filter(p => active === "all" || p.category === active);
+    document.getElementById("portfolioList").innerHTML = items.length ? items.map(p => `
+      <div class="portfolio-item">
+        <div class="portfolio-media">
+          ${p.video
+            ? `<video src="${p.video}" poster="${p.image}" controls></video>`
+            : `<img src="${p.image}" alt="${p.title}">`}
+          <span class="gear-tag">GEAR USED · ${p.gearUsed.length} รายการ</span>
+        </div>
+        <div class="portfolio-body">
+          <div class="portfolio-meta">${p.categoryTh} <span class="loc">· ${p.location}</span></div>
+          <div class="portfolio-title">${p.title}</div>
+          <div class="portfolio-desc">${p.desc}</div>
+          <div class="gear-pills">
+            ${p.gearUsed.map(g => `<span class="gear-pill">${g}</span>`).join("")}
+          </div>
+        </div>
+      </div>`).join("")
+      : `<div class="empty-state">ยังไม่มีผลงานในหมวดนี้</div>`;
+  }
+  draw();
+</script>
+</body>
+</html>

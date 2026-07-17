@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">บทความ | CHANTHABURI FIREWORKS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section>
+  <div class="container" style="max-width:800px;">
+    <a href="blog.html" class="back-link">← กลับไปหน้าบทความ</a>
+    <div id="postRoot"></div>
+  </div>
+</section>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  function thaiDate(iso) {
+    const d = new Date(iso);
+    return d.getDate() + "/" + (d.getMonth()+1) + "/" + (d.getFullYear()+543);
+  }
+  const id = getParam("id");
+  const b = BLOG.find(x => x.id === id);
+  const root = document.getElementById("postRoot");
+
+  if (!b) {
+    root.innerHTML = `<div class="empty-state">ไม่พบบทความนี้ — <a href="blog.html" style="color:var(--accent-2)">กลับไปหน้าบทความ</a></div>`;
+  } else {
+    document.getElementById("pageTitle").textContent = b.title + " | CHANTHABURI FIREWORKS";
+    root.innerHTML = `
+      <div class="post-meta" style="margin-bottom:14px;"><span>${thaiDate(b.date)}</span>·<span class="tag">${b.tag}</span></div>
+      <h1 class="detail-title" style="margin-bottom:22px;">${b.title}</h1>
+      <div class="gallery-main" style="margin-bottom:26px;"><img src="${b.image}" alt="${b.title}"></div>
+      <p class="detail-desc" style="font-size:15.5px; line-height:1.9;">${b.body}</p>`;
+  }
+</script>
+</body>
+</html>

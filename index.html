@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHANTHABURI FIREWORKS | ระบบจุดพลุมืออาชีพ</title>
+<meta name="description" content="เครื่องจุดพลุและอุปกรณ์ไฟเวิร์กระดับมืออาชีพ ควบคุมท้องฟ้าด้วยความแม่นยำ">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="badge"><span class="dot"></span>SYSTEM READY · ระบบพร้อมทำงาน</span>
+      <h1 class="hero-title">รับจุดพลุและดอกไม้ไฟ<br><span class="accent">พร้อมเอฟเฟกต์ทุกประเภท</span></h1>
+      <p class="hero-desc">ให้บริการรับออกแบบและแสดงพลุ ดอกไม้ไฟ และเอฟเฟกต์พิเศษครบวงจร สำหรับงานอีเวนต์ งานพิธี งานเทศกาล และงานเฉลิมฉลอง ทั้งภายในอาคารและกลางแจ้ง พร้อมจำหน่ายอุปกรณ์จุดพลุและเอฟเฟกต์ที่ได้มาตรฐาน โดยทีมงานผู้มีประสบการณ์และคำนึงถึงความปลอดภัยในทุกขั้นตอน</p>
+      <div class="hero-cta">
+        <a href="products.html" class="btn btn-primary">สำรวจอุปกรณ์ →</a>
+        <a href="portfolio.html" class="btn btn-outline">ดูผลงาน</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <span class="hud-tag hud-tl">● LINK: ACTIVE</span>
+      <span class="hud-tag hud-tr">IGNITION: ARMED</span>
+      <img id="heroImg" alt="เครื่องจุดพลุ PRO-X">
+    </div>
+  </div>
+</section>
+
+<!-- <div class="stat-strip">
+  <div class="container">
+    <div class="stat"><span>⚡</span><div><div class="num">&lt;5ms</div><div class="lbl">เวลาตอบสนอง</div></div></div>
+    <div class="stat"><span>🛡</span><div><div class="num">2 ปี</div><div class="lbl">รับประกัน</div></div></div>
+    <div class="stat"><span>📡</span><div><div class="num">500m</div><div class="lbl">ระยะสัญญาณ</div></div></div>
+    <div class="stat"><span>🔌</span><div><div class="num">24 CH</div><div class="lbl">ช่องจุดสูงสุด</div></div></div>
+  </div>
+</div> -->
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Featured Products</span>
+        <h2 class="section-title">สินค้าแนะนำ</h2>
+      </div>
+      <a href="products.html" class="btn btn-outline btn-sm">ดูสินค้าทั้งหมด →</a>
+    </div>
+    <div class="grid grid-4" id="featuredGrid"></div>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Gallery of Impact</span>
+        <h2 class="section-title">ผลงานล่าสุด</h2>
+      </div>
+      <a href="portfolio.html" class="btn btn-outline btn-sm">ดูผลงานทั้งหมด →</a>
+    </div>
+    <div class="grid grid-2" id="featuredPortfolio"></div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="container">
+    <h2>พร้อมยกระดับงานแสดงของคุณแล้วหรือยัง?</h2>
+    <p>ทีมงานของเราพร้อมให้คำปรึกษาและช่วยเลือกอุปกรณ์ที่เหมาะกับงานของคุณ</p>
+    <a href="contact.html" class="btn btn-primary">ติดต่อทีมงาน →</a>
+  </div>
+</div>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("heroImg").src = "images/pic1.jpg";
+
+
+  document.getElementById("featuredGrid").innerHTML =
+    PRODUCTS.slice(0, 4).map(productCardHTML).join("");
+
+  document.getElementById("featuredPortfolio").innerHTML =
+    PORTFOLIO.slice(0, 2).map(p => `
+    <a href="portfolio.html" class="portfolio-item" style="display:block;">
+      <div class="portfolio-media">
+        <img src="${p.image}" alt="${p.title}">
+        <span class="gear-tag">GEAR USED · ${p.gearUsed.length} รายการ</span>
+      </div>
+      <div class="portfolio-body">
+        <div class="portfolio-meta">${p.categoryTh} <span class="loc">· ${p.location}</span></div>
+        <div class="portfolio-title">${p.title}</div>
+        <div class="portfolio-desc">${p.desc}</div>
+      </div>
+    </a>`).join("");
+</script>
+</body>
+</html>

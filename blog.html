@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>บทความ | CHANTHABURI FIREWORKS</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<section style="padding-bottom:0;">
+  <div class="container">
+    <span class="eyebrow">Articles</span>
+    <h1 class="section-title" style="margin-bottom:10px;">บทความ / ข่าวสาร</h1>
+    <p class="section-sub">ความรู้ทางเทคนิค คู่มือการใช้งาน และข่าวสารล่าสุดจากวงการไฟเวิร์ก</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid grid-3" id="blogGrid"></div>
+  </div>
+</section>
+
+<script src="data/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  function thaiDate(iso) {
+    const d = new Date(iso);
+    return d.getDate() + "/" + (d.getMonth()+1) + "/" + (d.getFullYear()+543);
+  }
+  document.getElementById("blogGrid").innerHTML = BLOG.map(b => `
+    <a href="post.html?id=${b.id}" class="post-card">
+      <div class="post-media"><img src="${b.image}" alt="${b.title}"></div>
+      <div class="post-body">
+        <div class="post-meta"><span>${thaiDate(b.date)}</span>·<span class="tag">${b.tag}</span></div>
+        <div class="post-title">${b.title}</div>
+        <div class="post-excerpt">${b.excerpt}</div>
+        <span class="read-more">อ่านต่อ →</span>
+      </div>
+    </a>`).join("");
+</script>
+</body>
+</html>
